@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saudi Aramco – Work Permit Rules Quiz</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+ 
+  :root {
+    --bg: #0a0e17;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: #2a3a55;
+    --accent: #00c8ff;
+    --accent2: #ff6b35;
+    --gold: #f5c842;
+    --green: #22c55e;
+    --red: #ef4444;
+    --text: #e2e8f0;
+    --muted: #64748b;
+    --radius: 12px;
+  }
+ 
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+ 
+  /* HEADER */
+  header {
+    background: linear-gradient(135deg, #0a0e17 0%, #0d1f3c 50%, #0a1628 100%);
+    border-bottom: 2px solid var(--accent);
+    padding: 32px 24px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,200,255,0.08) 0%, transparent 70%);
+  }
+  .header-badge {
+    display: inline-block;
+    background: linear-gradient(90deg, var(--accent2), var(--gold));
+    color: #000;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    font-size: 12px;
+    padding: 4px 16px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  header h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+    letter-spacing: 3px;
+    color: #fff;
+    text-shadow: 0 0 40px rgba(0,200,255,0.4);
+    margin-bottom: 6px;
+  }
+  header h1 span { color: var(--accent); }
+  header p.subtitle {
+    color: var(--muted);
+    font-size: 14px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .stats-row {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin-top: 22px;
+    flex-wrap: wrap;
+  }
+  .stat-item { text-align: center; }
+  .stat-item .num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-item .lbl { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+ 
+  /* CONTROLS */
+  .controls {
+    max-width: 960px;
+    margin: 24px auto 0;
+    padding: 0 16px;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .section-filter {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .section-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+  .section-btn.active, .section-btn:hover {
+    background: var(--accent);
+    color: #000;
+    border-color: var(--accent);
+    font-weight: 700;
+  }
+  .action-btns { display: flex; gap: 10px; }
+  .btn {
+    padding: 9px 22px;
+    border-radius: var(--radius);
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    font-family: 'Source Sans 3', sans-serif;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+  }
+  .btn-primary { background: var(--accent); color: #000; }
+  .btn-primary:hover { background: #38daff; transform: translateY(-1px); }
+  .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+  .btn-danger { background: var(--red); color: #fff; }
+  .btn-success { background: var(--green); color: #000; }
+ 
+  /* PROGRESS */
+  .progress-wrap {
+    max-width: 960px; margin: 18px auto 0; padding: 0 16px;
+  }
+  .progress-bar-bg {
+    background: var(--surface2);
+    border-radius: 4px;
+    height: 6px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent), var(--accent2));
+    border-radius: 4px;
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+  .progress-label {
+    display: flex; justify-content: space-between;
+    font-size: 12px; color: var(--muted); margin-top: 5px;
+  }
+ 
+  /* QUIZ BODY */
+  .quiz-container {
+    max-width: 960px;
+    margin: 20px auto 60px;
+    padding: 0 16px;
+  }
+ 
+  /* SECTION HEADER */
+  .section-header {
+    background: linear-gradient(90deg, rgba(0,200,255,0.1), transparent);
+    border-left: 4px solid var(--accent);
+    padding: 12px 20px;
+    margin: 32px 0 18px;
+    border-radius: 0 var(--radius) var(--radius) 0;
+  }
+  .section-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    color: var(--accent);
+  }
+  .section-header p { font-size: 13px; color: var(--muted); margin-top: 2px; }
+ 
+  /* QUESTION CARD */
+  .question-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 16px;
+    transition: border-color 0.3s;
+    position: relative;
+  }
+  .question-card.answered { border-color: var(--border); }
+  .question-card.correct { border-color: var(--green); background: #0f1f13; }
+  .question-card.incorrect { border-color: var(--red); background: #1f0f0f; }
+  .question-card.partial { border-color: var(--gold); background: #1a1700; }
+ 
+  .q-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 12px;
+  }
+  .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+    background: var(--surface2);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  .q-tag {
+    font-size: 11px;
+    color: var(--accent2);
+    background: rgba(255,107,53,0.1);
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .q-tag.multi { color: var(--gold); background: rgba(245,200,66,0.1); }
+ 
+  .question-text {
+    font-size: 15.5px;
+    color: var(--text);
+    margin-bottom: 18px;
+    line-height: 1.65;
+    font-weight: 600;
+  }
+ 
+  .options-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media (max-width: 600px) { .options-grid { grid-template-columns: 1fr; } }
+ 
+  .option-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: var(--surface2);
+    position: relative;
+  }
+  .option-label:hover { border-color: var(--accent); background: rgba(0,200,255,0.05); }
+  .option-label input { display: none; }
+  .option-label.selected { border-color: var(--accent); background: rgba(0,200,255,0.1); }
+  .option-label.correct-opt { border-color: var(--green) !important; background: rgba(34,197,94,0.12) !important; }
+  .option-label.wrong-opt { border-color: var(--red) !important; background: rgba(239,68,68,0.1) !important; }
+  .option-label.correct-opt .opt-letter { background: var(--green); color: #000; }
+  .option-label.wrong-opt .opt-letter { background: var(--red); color: #fff; }
+ 
+  .opt-letter {
+    min-width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--muted);
+    transition: all 0.2s;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .option-label.selected .opt-letter { background: var(--accent); color: #000; }
+  .opt-text { font-size: 14.5px; color: var(--text); line-height: 1.5; }
+ 
+  .feedback-box {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .feedback-box.show { display: block; }
+  .feedback-box.correct { background: rgba(34,197,94,0.1); border: 1px solid var(--green); color: var(--green); }
+  .feedback-box.incorrect { background: rgba(239,68,68,0.08); border: 1px solid var(--red); color: #fca5a5; }
+  .feedback-box.partial { background: rgba(245,200,66,0.1); border: 1px solid var(--gold); color: var(--gold); }
+  .feedback-box strong { display: block; margin-bottom: 4px; }
+ 
+  .check-btn-wrap { margin-top: 14px; display: flex; gap: 10px; align-items: center; }
+ 
+  /* SCORE PANEL */
+  .score-panel {
+    display: none;
+    background: var(--surface);
+    border: 2px solid var(--accent);
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    margin: 40px 0;
+  }
+  .score-panel.show { display: block; }
+  .score-circle {
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: conic-gradient(var(--accent) 0%, var(--surface2) 0%);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    position: relative;
+    transition: all 1s ease;
+  }
+  .score-inner {
+    width: 110px; height: 110px;
+    border-radius: 50%;
+    background: var(--surface);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .score-pct { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; color: var(--accent); line-height: 1; }
+  .score-lbl { font-size: 11px; color: var(--muted); }
+  .score-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 16px; margin: 24px 0;
+  }
+  .score-stat { background: var(--surface2); border-radius: 8px; padding: 16px; }
+  .score-stat .val { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; }
+  .score-stat .key { font-size: 12px; color: var(--muted); }
+  .score-stat.c .val { color: var(--green); }
+  .score-stat.w .val { color: var(--red); }
+  .score-stat.s .val { color: var(--accent); }
+  .verdict {
+    font-size: 1.4rem; font-weight: 700; margin-bottom: 8px;
+  }
+ 
+  /* ANSWER KEY */
+  .answer-key-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    margin-top: 40px;
+  }
+  .answer-key-section h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .ak-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 8px;
+  }
+  .ak-item {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 12px;
+    display: flex; gap: 8px; align-items: center;
+    font-size: 13px;
+  }
+  .ak-item .qn {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    min-width: 32px;
+  }
+  .ak-item .ans {
+    font-weight: 700;
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+ 
+  /* STICKY NAV */
+  .sticky-score {
+    position: fixed;
+    top: 16px; right: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 18px;
+    font-size: 13px;
+    z-index: 100;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    min-width: 140px;
+  }
+  .sticky-score .row { display: flex; justify-content: space-between; gap: 12px; margin: 2px 0; }
+  .sticky-score .c { color: var(--green); font-weight: 700; }
+  .sticky-score .w { color: var(--red); font-weight: 700; }
+  .sticky-score .t { color: var(--muted); }
+ 
+  /* TOOLTIP */
+  .required-note {
+    font-size: 12px;
+    color: var(--muted);
+    font-style: italic;
+    margin-left: 8px;
+  }
+ 
+  /* JUMP TO SECTION */
+  .toc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .toc h3 { font-family: 'Bebas Neue', sans-serif; letter-spacing: 1px; color: var(--accent); margin-bottom: 14px; font-size: 1.2rem; }
+  .toc-links { display: flex; flex-wrap: wrap; gap: 8px; }
+  .toc-link {
+    color: var(--text);
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    padding: 5px 14px;
+    border-radius: 20px;
+    text-decoration: none;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+  .toc-link:hover { border-color: var(--accent); color: var(--accent); }
+ 
+  /* PRINT / EXPORT NOTE */
+  .export-bar {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    padding: 14px 0;
+    border-top: 1px solid var(--border);
+    margin-top: 20px;
+  }
+ 
+  .hidden { display: none !important; }
+  @media print {
+    .sticky-score, .controls, .action-btns, .btn, header .stats-row { display: none; }
+    body { background: white; color: black; }
+    .question-card { break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+ 
+<div class="sticky-score" id="stickyScore">
+  <div style="font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:6px;font-family:'Bebas Neue',sans-serif;">SCORE TRACKER</div>
+  <div class="row"><span class="t">Answered</span><span id="stAns" class="c">0</span></div>
+  <div class="row"><span class="t">Correct</span><span id="stCor" class="c">0</span></div>
+  <div class="row"><span class="t">Wrong</span><span id="stWrg" class="w">0</span></div>
+  <div class="row"><span class="t">Score</span><span id="stPct" style="color:var(--gold);font-weight:700;">0%</span></div>
+</div>
+ 
+<header>
+  <div class="header-badge">🛡️ SAFETY EXAM PREP · SECTION TWO</div>
+  <h1>Saudi Aramco <span>Work Permit Rules</span></h1>
+  <p class="subtitle">Professional Quiz – 330 MCQs | Work Permit System, Hazard Control, LOTO, Confined Space & More</p>
+  <div class="stats-row">
+    <div class="stat-item"><div class="num">330</div><div class="lbl">Questions</div></div>
+    <div class="stat-item"><div class="num">12</div><div class="lbl">Sections</div></div>
+    <div class="stat-item"><div class="num">70%</div><div class="lbl">Pass Mark</div></div>
+    <div class="stat-item"><div class="num">1pt</div><div class="lbl">Per Question</div></div>
+  </div>
+</header>
+ 
+<div class="controls">
+  <div style="font-size:13px;color:var(--muted);">
+    ✅ Auto-graded &nbsp;|&nbsp; 🔀 Select all that apply where marked &nbsp;|&nbsp; 📋 Answer key at bottom
+  </div>
+  <div class="action-btns">
+    <button class="btn btn-secondary" onclick="showAllAnswers()">Reveal All Answers</button>
+    <button class="btn btn-primary" onclick="submitAll()">Submit & Score</button>
+    <button class="btn btn-secondary" onclick="resetAll()">Reset</button>
+  </div>
+</div>
+ 
+<div class="progress-wrap">
+  <div class="progress-bar-bg"><div class="progress-bar-fill" id="progressFill"></div></div>
+  <div class="progress-label">
+    <span id="progressText">0 of 330 answered</span>
+    <span id="progressPct">0%</span>
+  </div>
+</div>
+ 
+<div class="quiz-container">
+ 
+  <!-- TABLE OF CONTENTS -->
+  <div class="toc">
+    <h3>📑 Jump to Section</h3>
+    <div class="toc-links">
+      <a href="#sec1" class="toc-link">1. Certificates & Validity</a>
+      <a href="#sec2" class="toc-link">2. Restricted Areas</a>
+      <a href="#sec3" class="toc-link">3. Work Permit Purpose & Types</a>
+      <a href="#sec4" class="toc-link">4. Issuer Responsibilities</a>
+      <a href="#sec5" class="toc-link">5. Receiver Responsibilities</a>
+      <a href="#sec6" class="toc-link">6. Joint Site Inspection</a>
+      <a href="#sec7" class="toc-link">7. Permit Duration & Renewal</a>
+      <a href="#sec8" class="toc-link">8. Gas Testing & Atmosphere</a>
+      <a href="#sec9" class="toc-link">9. Hot Work & Fire Safety</a>
+      <a href="#sec10" class="toc-link">10. LOTO & Isolation</a>
+      <a href="#sec11" class="toc-link">11. Confined Space Entry</a>
+      <a href="#sec12" class="toc-link">12. Excavations & Heavy Equipment</a>
+    </div>
+  </div>
+ 
+  <div id="scorePanel" class="score-panel">
+    <div class="score-circle" id="scoreCircle">
+      <div class="score-inner">
+        <div class="score-pct" id="scorePct">0%</div>
+        <div class="score-lbl">SCORE</div>
+      </div>
+    </div>
+    <div class="verdict" id="verdict"></div>
+    <p id="verdictSub" style="color:var(--muted);font-size:14px;margin-bottom:20px;"></p>
+    <div class="score-grid">
+      <div class="score-stat c"><div class="val" id="scCorrect">0</div><div class="key">Correct</div></div>
+      <div class="score-stat w"><div class="val" id="scWrong">0</div><div class="key">Wrong / Unanswered</div></div>
+      <div class="score-stat s"><div class="val" id="scTotal">330</div><div class="key">Total Questions</div></div>
+    </div>
+    <button class="btn btn-secondary" onclick="document.getElementById('scorePanel').classList.remove('show')">Close</button>
+  </div>
+ 
+  <div id="quizBody"></div>
+ 
+  <!-- ANSWER KEY -->
+  <div class="answer-key-section" id="answerKeySection">
+    <h2>📋 Complete Answer Key</h2>
+    <p style="color:var(--muted);font-size:13px;margin-bottom:20px;">All 330 correct answers as per the document. Multi-answer questions show all correct options.</p>
+    <div class="ak-grid" id="akGrid"></div>
+  </div>
+ 
+</div>
+ 
+<script>
+// ===== ALL 330 QUESTIONS DATA =====
+// Format: { q: "question", opts: ["A:..","B:..","C:..","D:.."], ans: ["A"] or ["A","B"], section: N }
+// Answers from provided answer key in document
+ 
+const SECTIONS = [
+  { id: "sec1",  title: "Certificates & Validity", desc: "Certificate issuance, signing authority, and validity periods" },
+  { id: "sec2",  title: "Restricted Areas",         desc: "Definition, types, distances, and restricted activities" },
+  { id: "sec3",  title: "Work Permit – Purpose & Types", desc: "Why, what type, and when work permits are required" },
+  { id: "sec4",  title: "Issuer Responsibilities",  desc: "Issuer duties, actions, and authorities" },
+  { id: "sec5",  title: "Receiver Responsibilities", desc: "Receiver duties, signing, actions, and obligations" },
+  { id: "sec6",  title: "Joint Site Inspection",    desc: "JSI process, hazard analysis checklist, and outcomes" },
+  { id: "sec7",  title: "Permit Duration & Renewal",desc: "How long permits are valid, renewal, and transfer rules" },
+  { id: "sec8",  title: "Gas Testing & Atmosphere", desc: "Gas test requirements, readings, and hazardous atmospheres" },
+  { id: "sec9",  title: "Hot Work & Fire Safety",   desc: "Hot work permits, firewatches, sewers, and LOTO" },
+  { id: "sec10", title: "LOTO & Isolation",         desc: "Lock Out Tag Out, isolation methods, and energy control" },
+  { id: "sec11", title: "Confined Space Entry",     desc: "CSE permits, ventilation, rescue, and standby man" },
+  { id: "sec12", title: "Excavations, Heavy Equipment & General Safety", desc: "Excavation rules, heavy equipment, signage, and PPE" },
+];
+ 
+const QUESTIONS = [
+  // SECTION 1: Certificates & Validity (Q1-3)
+  {s:0, q:"For how long is a certificate issued to issuer and receiver? For how long is a certificate valid?", opts:["A: 2 Months","B: 3 Years","C: 2½ Years","D: 2 Years"], ans:["D"]},
+  {s:0, q:"Who will sign the certificate of an issuer? Issuer is certified by…", opts:["A: Manager of Construction","B: Their division/department head (By Superintendent)","C: Head of T & D","D: Shift Supervisor"], ans:["B"]},
+  {s:0, q:"Who will sign the certificate of a receiver? Receiver is certified by…", opts:["A: Manager of Construction","B: Their superintendent (division/department head)","C: Head of T & D","D: Shift Supervisor"], ans:["B"]},
+ 
+  // SECTION 2: Restricted Areas (Q4-22)
+  {s:1, q:"A restricted area requires…", opts:["A: That receiver responds to emergency","B: Work Permit system to be implemented","C: That work permit is issued/used","D: Fire-watch to be present"], ans:["B","C"]},
+  {s:1, q:"What is required to work in a restricted area?", opts:["A: That receiver responds to emergency","B: Work Permit","C: (To) obtain work permit","D: Fire-watch to be present"], ans:["B","C"]},
+  {s:1, q:"What do you call an area where work permits are required to work or have entry?", opts:["A: A restricted area","B: A controlled area","C: A sensitive area","D: A dangerous area"], ans:["A"]},
+  {s:1, q:"Restricted areas include which locations?", opts:["A: Pump stations, sewer plants and wells","B: Wells, loading piers and welding shops","C: Fenced area, wells and community buildings","D: Pump stations, gasoline stations and gas wells"], ans:["A","D"]},
+  {s:1, q:"Which of the following is NOT a restricted area?", opts:["A: Loading pier","B: Gasoline station","C: Dump site","D: Tank form"], ans:["C"]},
+  {s:1, q:"Who decides whether an area should be restricted or not? Who will declare that an area is a 'restricted area'?", opts:["A: Loss prevention","B: The department manager","C: Issuer","D: As mentioned in GI 2.100"], ans:["B"]},
+  {s:1, q:"Within how much distance from a hydrocarbon line or equipment is a work permit required?", opts:["A: 23 ft","B: 75 ft (23 m)","C: Inside fence area only","D: 100 ft"], ans:["B"]},
+  {s:1, q:"Within how many feet of a power line is a work permit required?", opts:["A: 100 ft","B: 200 ft","C: 50 ft (15 m)","D: 150 ft"], ans:["C"]},
+  {s:1, q:"Which one of the following is a restricted activity?", opts:["A: Working within 23-m of hydrocarbon storage tank","B: Working near to overhead powerline","C: Working 100-m from a pressurised equipment","D: A & B"], ans:["D"]},
+  {s:1, q:"Which is a mandatory restricted activity?", opts:["A: 100-m distance from gaseous pipeline","B: Working at 55-m from hazardous equipment","C: Working in excavation of 4 feet in length","D: Job at 23-m distance from pressurised equipment"], ans:["D"]},
+  {s:1, q:"Which of the following is NOT a restricted activity?", opts:["A: Doing crane lifting","B: Performing hot work in restricted area","C: Entering an excavation 1-meter deep","D: Entering a confined space"], ans:["C"]},
+  {s:1, q:"Who can decide that a job is a 'Low Risk Activity'?", opts:["A: Receiver","B: Shift Supervisor","C: The Issuer","D: Proponent Management"], ans:["C"]},
+  {s:1, q:"Who will decide that a 'Low Risk Activity' can be performed in restricted area without a work permit?", opts:["A: Receiver","B: Shift Supervisor","C: The Issuer","D: Proponent Management"], ans:["C"]},
+  {s:1, q:"Is a low-risk activity (which does not require a work permit) a free hand to the work crew?", opts:["A: No, it requires following SA Safety requirements and worker control","B: Yes, but issuer must be on site","C: (No) Take permission of Issuer/area-supervisor and follow SA Safety requirements","D: None of the mentioned"], ans:["A","C"]},
+  {s:1, q:"Why is a work permit required in a restricted area? Work permit is used to…", opts:["A: Precautions","B: Control workers","C: To control hazards","D: To control equipment movement"], ans:["C"]},
+  {s:1, q:"Why do we use the work permit system?", opts:["A: To renew certificate","B: To prevent accident","C: To log accident","D: To carry out job safely"], ans:["B","D"]},
+  {s:1, q:"What is the purpose of the work permit system? (Select all that apply)", opts:["A: To authorize all work activities during a T&I on a form","B: To authorize specific construction or maintenance work","C: To document when receiver starts works for timekeeping","D: To ensure hot work is not done in restricted area"], ans:["B"]},
+ 
+  // SECTION 3: Work Permit – Purpose & Types (Q20-60)
+  {s:2, q:"Work permits must be issued for… / Work permits authorize…", opts:["A: General work on general location","B: Specific work on/at specific location","C: Specific location and general work","D: Specific work on general location"], ans:["B"]},
+  {s:2, q:"What type of work does the work permit system authorize?", opts:["A: Specific construction, maintenance, or repair work","B: All work done by maintenance or construction","C: All work conducted for Saudi Aramco","D: Non-hazardous work where safety is important"], ans:["A"]},
+  {s:2, q:"We use work permit in restricted area to…", opts:["A: Check expired certificates","B: Identify alternate services","C: To be sure that precautions are taken","D: Use a designated representative"], ans:["C"]},
+  {s:2, q:"We use work permit in restricted area to identify…", opts:["A: The designated representative","B: Expired permits","C: Alternate receiver","D: Hazards and recommend precautions"], ans:["D"]},
+  {s:2, q:"What are two important reasons for using a work permit?", opts:["A: To communicate and control work","B: To communicate and control work, and to control people's access","C: To track control and manage emergency","D: To track contractor's work hours"], ans:["A","B"]},
+  {s:2, q:"A work permit lists… (Precautions written in work permit)", opts:["A: Maximum safety precautions","B: Minimum safety precautions","C: Government safety precautions","D: OSHA safety precautions"], ans:["B"]},
+  {s:2, q:"A work permit issuer is responsible for the safety of…", opts:["A: The receiver's certificate","B: Extending certificate","C: Nothing once he issues a permit","D: Personnel and equipment at the job site"], ans:["D"]},
+  {s:2, q:"Who should point out all hazards and write on the work permit?", opts:["A: The issuer / designated representative","B: The standby man","C: The Firewatch","D: The receiver"], ans:["A"]},
+  {s:2, q:"A work permit must be written in…", opts:["A: Arabic","B: Both English and Arabic","C: Arabic and with led pencil","D: English"], ans:["D"]},
+  {s:2, q:"Which type of work permit is required for abrasive blasting (sand blasting) in a restricted area?", opts:["A: Cold work permit","B: Hot work permit","C: Hot work and confined space entry permit","D: Equipment opening/line break permit"], ans:["A"]},
+  {s:2, q:"What type of work permit is required when working in close proximity to a live electrical line?", opts:["A: Cold work permit","B: Hot work permit","C: Hot work and confined space entry permit","D: Equipment opening/line break permit"], ans:["A"]},
+  {s:2, q:"What type of work permit is required to take a vehicle or construction equipment inside a restricted area?", opts:["A: Confined space entry permit","B: Vehicle entry permit","C: Cold work permit","D: Hot work permit"], ans:["C"]},
+  {s:2, q:"What type of work permit is required to clean a tank from inside, perform inside inspection, or work inside sewers?", opts:["A: Cold work permit","B: Hot/cold and confined space entry permit","C: Hot and cold work permit","D: Equipment opening/line break"], ans:["B"]},
+  {s:2, q:"When going into a manhole to do a welding job, what kind of permit(s) are required?", opts:["A: Hot work and confined space entry permits","B: Cold work and confined space entry permits","C: Hot and cold work permits","D: Confined space entry permit only"], ans:["A"]},
+  {s:2, q:"When working for well-head tie-in job using crane and hand tools, what kind of permits are required?", opts:["A: Hot work and cold work permits","B: Hot work, cold work, and equipment opening/line break permit","C: Hot work and confined space entry permit","D: Equipment opening/line break permit only"], ans:["B"]},
+  {s:2, q:"With manual back filling, a crew needs an engine operated compactor to do their job in a 5 ft deep trench. What kind of permit(s) are required?", opts:["A: Cold work and confined space entry permits","B: Hot work and cold work","C: Hot work, cold work, and confined space entry permits","D: Only confined space entry permit"], ans:["A"]},
+  {s:2, q:"For electric operated X-ray equipment, what type of permit is required?", opts:["A: Cold work permit","B: Hot work permit","C: No permit is required","D: Confined space entry permit"], ans:["A"]},
+  {s:2, q:"What type of work permit is required for sealed source radiography (gamma radiation)?", opts:["A: Cold work permit","B: Hot work permit","C: No permit is required","D: Equipment entry work permit"], ans:["A"]},
+  {s:2, q:"The use of an air compressor in an operational/restricted area requires which work permit?", opts:["A: Equipment opening/line break","B: Cold work permit","C: Confined space entry","D: Hot work permit"], ans:["D"]},
+  {s:2, q:"Why cannot a pipefitter work on the same piece of equipment using a welder's work permit?", opts:["A: Joint site inspection is not required for pipefitters","B: Gas test is not required for pipefitters","C: Each type of work involves different hazards","D: Welders are usually contractors"], ans:["C"]},
+  {s:2, q:"Can work in two different locations be covered under one work permit?", opts:["A: Yes","B: Only if agreed by issuer","C: Only with superintendent approval","D: No"], ans:["D"]},
+  {s:2, q:"If mechanical and electrical groups are working on the same equipment in a restricted area, how many permits are required?", opts:["A: Two work permits are required","B: Each group must have their separate work permit","C: When the maintenance person agrees to work without permit","D: When foreman and superintendent agree on one permit"], ans:["B"]},
+  {s:2, q:"What type of work permit is required to operate crane in restricted area?", opts:["A: No permit is required","B: Cold Work Permit","C: Hot Work Permit","D: Release Permit"], ans:["B"]},
+  {s:2, q:"For a welding work inside a confined space, which work permit is required?", opts:["A: Hot Work Permit","B: Hot Work and Confined Space Entry Permit","C: A & D","D: Equipment Opening Line Brake Permit"], ans:["B"]},
+  {s:2, q:"An equipment opening/line break permit is required when…", opts:["A: Operator purges an equipment","B: When pipefitter opens a line or installs blind","C: Operator releases hydrocarbon to flair","D: Craftsmen build scaffold"], ans:["B"]},
+  {s:2, q:"What type of work permit is required when opening a line flange or equipment? Which permit is required for a tie-in activity?", opts:["A: Cold Work Permit","B: Equipment Opening Line Brake (EOLB) Permit","C: Hot Work Permit","D: No Work Permit is required"], ans:["B"]},
+  {s:2, q:"If there is one welding machine used by both a welding and an electric group, how many work permits are required?", opts:["A: One","B: Three","C: Two work permits","D: If issuer is agreeing, one permit"], ans:["C"]},
+  {s:2, q:"A cold work permit is required for scaffold erection. Which type of work permit is required?", opts:["A: Cold Work Permit","B: Confined Space Entry Permit","C: Hot Work Permit","D: No Work Permit is required"], ans:["A"]},
+ 
+  // SECTION 4: Issuer Responsibilities (Q68-97)
+  {s:3, q:"An issuer has which responsibility? Issuer is responsible to/for…", opts:["A: Define safety precautions and stay there","B: Supervise the crew and sign the work permit","C: Issues and receive work permit","D: Define safety precautions and sign work permit"], ans:["D"]},
+  {s:3, q:"Why is it important that the issuer tells receiver about safety hazards he may find at the job site?", opts:["A: The receiver does not read the work permit","B: The receiver may not have worked in the area before","C: The receiver must respond to emergencies","D: The receiver must take gas test"], ans:["B"]},
+  {s:3, q:"What must an issuer do before issuing the work permit?", opts:["A: Close the work permit and check the receiver certificate","B: Check the receiver certificate and get countersign","C: Provide first aid and assign a Firewatch","D: Renew certificate and get countersign"], ans:["B"]},
+  {s:3, q:"For how long must the issuer keep the original work permit on file?", opts:["A: Up to end of work","B: 3 months","C: 30 days","D: 3 years"], ans:["C"]},
+  {s:3, q:"Who should keep the work permit on the job site?", opts:["A: The Firewatch","B: The issuer","C: The receiver","D: The standby man"], ans:["C"]},
+  {s:3, q:"What must an issuer write along with his signature when issuing the work permit?", opts:["A: Time and date and certificate number","B: Gas test, badge number and certificate number","C: Organization code, badge number and certificate number","D: Name, badge number and organization code"], ans:["C"]},
+  {s:3, q:"What must a receiver write along with his signature when receiving the work permit?", opts:["A: Name, organization code and badge number","B: Organization code, badge number and certificate number","C: Time and date and certificate number","D: Name, badge number and organization code"], ans:["B"]},
+  {s:3, q:"The issuer must stop work if...", opts:["A: When the issuer goes to his office","B: The issuer left the job site","C: The job site is found (to be) unsafe","D: The issuer lost his copy of permit"], ans:["C"]},
+  {s:3, q:"What must the issuer do after/when he stops work?", opts:["A: Write the reason on the permit","B: Get a countersign","C: Close, then extend the permit","D: Give his copy to the receiver"], ans:["A"]},
+  {s:3, q:"Why must the work permit issuer check the crane operator's certificate before issuing the work permit?", opts:["A: To prove his company","B: To make sure he is certified (competent)","C: To know his age","D: To confirm his nationality"], ans:["B"]},
+  {s:3, q:"Who is responsible to take countersign of the other issuer/department?", opts:["A: Maintenance personnel","B: Issuer","C: Designated representative","D: Receiver"], ans:["B"]},
+  {s:3, q:"When a permit is renewed and it contains countersign of another organization, what should be done?", opts:["A: Notify all countersigning organizations about permit renewal","B: No need to inform or take countersign again","C: Inform shift supervisor","D: Take countersign again with renewal"], ans:["D"]},
+  {s:3, q:"Who must sign the work permit to close it?", opts:["A: Competent person","B: Gas Tester, Issuer and Receiver","C: Both, the issuer and receiver","D: Designated Representative"], ans:["C"]},
+  {s:3, q:"Why must the work permit be closed?", opts:["A: To communicate the status of work","B: To allow gas test to be taken","C: To make sure that work site is left safe","D: To stop work"], ans:["C"]},
+  {s:3, q:"When must the work permit be closed?", opts:["A: When the work is finished and/or work crew leaves","B: Just before the end of shift","C: Before another permit is issued","D: When the issuer leaves job site"], ans:["A"]},
+  {s:3, q:"Why is the checklist section important to issuer and receiver?", opts:["A: It makes sure that important steps have been taken","B: It controls the receiver's break time","C: It defines the duration and scope of work","D: It tells them all the precautions to take"], ans:["A"]},
+  {s:3, q:"'Use a fire blanket' or 'hand dig only' are examples of…", opts:["A: Basic safety","B: Additional precautions","C: Working criteria","D: Not safety precautions"], ans:["B"]},
+  {s:3, q:"The information entered in 'exact work location' is important because it describes…", opts:["A: What equipment can be used","B: How many workers can be on site","C: Up to which time receiver can work","D: Where the receiver can work"], ans:["D"]},
+  {s:3, q:"What information does a 'Location Box' on the work permit give to the receiver?", opts:["A: Exact location where receiver can work","B: Where the receiver can go","C: Every equipment which receiver can use","D: None of above"], ans:["A"]},
+  {s:3, q:"What information does a 'Duration Box' on the work permit give to the receiver?", opts:["A: How many workers are allowed for work","B: When to start and when to stop work","C: Up to which time receiver can work","D: Where receiver can work"], ans:["C"]},
+  {s:3, q:"If the work permit is not issued during an emergency, what must be done to do the work?", opts:["A: Superintendent must approve","B: All safety precautions must be taken","C: Wear SCUBA and perform work","D: Perform joint site inspection"], ans:["B"]},
+  {s:3, q:"Who must sign the work permit issued for up to 30 days? Extended Work Permit is approved by…", opts:["A: Receiver and designated representative","B: Operation Foreman, issuer, and receiver","C: Division heads of issuer and receiver","D: Operation and maintenance division head"], ans:["D"]},
+  {s:3, q:"Stop Work Authority steps are…", opts:["A: Stop, notify, investigate, follow-up, communicate","B: Stop, communicate, notify, investigate, follow-up","C: Stop, notify, investigate, communicate, follow-up","D: Communicate, investigate, stop and follow-up"], ans:["A"]},
+  {s:3, q:"Who can stop work in Saudi Aramco facilities and areas?", opts:["A: Proponent manager","B: Recover and issuer","C: All personnel (Everyone)","D: Designated representative"], ans:["C"]},
+  {s:3, q:"How many steps are there in Stop Work Authority?", opts:["A: Five","B: Only three steps","C: Too many steps","D: As much required by issuer"], ans:["A"]},
+  {s:3, q:"In Saudi Aramco facilities/areas, anyone can get help from…", opts:["A: Daily news bulletin","B: Only from CSM","C: Loss prevention monthly magazine","D: CSM, SMS, Safety Handbook"], ans:["D"]},
+ 
+  // SECTION 5: Receiver Responsibilities (Q98-127)
+  {s:4, q:"A receiver is… / Who is a work permit receiver?", opts:["A: A person certified to receive permit","B: Certified craftsman","C: Senior craftsman manager","D: A person nominated by his supervisor"], ans:["A"]},
+  {s:4, q:"From whom will the receiver request a work permit before starting work?", opts:["A: Authorized issuer","B: Aramco employee","C: Designated representative","D: Saudi Aramco Security Person"], ans:["A"]},
+  {s:4, q:"Who should ask for the work permit before starting work?", opts:["A: Standby man","B: The Firewatch","C: The receiver","D: Group supervisor"], ans:["C"]},
+  {s:4, q:"The receiver receives work permit from…", opts:["A: Certified Operations Supervisor (Issuer)","B: Operations Supervisor","C: Standby man of Operations","D: Saudi Aramco Employee"], ans:["A"]},
+  {s:4, q:"Who will issue the work permit?", opts:["A: Designated Receiver","B: Senior operator","C: (Saudi Aramco) Certified Issuer","D: A & B"], ans:["C"]},
+  {s:4, q:"What should be the first thing to do when receiver needs a work permit?", opts:["A: Present his certificate to issuer and request for permit","B: Get tools ready","C: Shutoff the circuit breaker","D: Tell his supervisor to go with him"], ans:["A"]},
+  {s:4, q:"What should receiver do before he asks for a work permit from the issuer?", opts:["A: Tell his supervisor to go with him","B: Shutoff the circuit breaker","C: Get tools ready","D: Present his certificate to issuer"], ans:["D"]},
+  {s:4, q:"What two things must receiver do before signing a work permit?", opts:["A: Take gas test and check Scott air pack","B: Read the permit and agree to all conditions","C: Extend the work permit and take gas test","D: Train the Firewatch and renew the permit"], ans:["B"]},
+  {s:4, q:"Can a receiver refuse to sign a work permit?", opts:["A: No, he cannot","B: Yes, when not agreed with conditions and/or safety precautions not sufficient","C: When he thinks safety precautions are not sufficient/enough","D: He must sign, even he disagrees with safety measures"], ans:["B","C"]},
+  {s:4, q:"The receiver's main responsibilities include…", opts:["A: Being the designated representative","B: Filling and sign for the issuer","C: Comply with safety precautions agreed upon with issuer","D: Responding to operations emergencies"], ans:["C"]},
+  {s:4, q:"Why do issuer and receiver sign when opening, renewing, and closing the permit?", opts:["A: To understand the work and accept all conditions","B: To inform new issuer","C: Receiver may forget his responsibilities","D: Issuer may handover job to receiver"], ans:["A"]},
+  {s:4, q:"When receiver and issuer sign the permit…", opts:["A: Both agree on the terms and conditions","B: In emergency to stop work","C: When job site is safe to work","D: Both become agreed on the terms and conditions"], ans:["A","D"]},
+  {s:4, q:"By signing on the work permit, the receiver…", opts:["A: Receivers meet the required conditions","B: Becomes agreed with all written conditions of the work permit","C: Can leave the work area","D: Has choice to follow or not follow instructions"], ans:["B"]},
+  {s:4, q:"When will receiver and issuer sign the permit?", opts:["A: When both agreed on the terms and conditions","B: When job site is safe to work","C: In emergency to stop work","D: When they want to do the job"], ans:["A"]},
+  {s:4, q:"Receiver signing with Issuer is to accept that…", opts:["A: Both share safety responsibilities","B: Issuer is having authority on work stoppage","C: He knows what job is","D: He is not responsible for accidents"], ans:["A"]},
+  {s:4, q:"When does the receiver sign the permit?", opts:["A: When receiver can meet the required conditions","B: When he can fulfil minimum half of the safety requirement","C: When the work is urgent","D: When he agreed with all requirements of the work permit"], ans:["D"]},
+  {s:4, q:"When will receiver sign the permit?", opts:["A: Before filing the permit","B: Before issuer signs the permit","C: After issuer signs the permit","D: Any time he can sign permit"], ans:["C"]},
+  {s:4, q:"What joint responsibility do issuer and receiver share?", opts:["A: Responding to emergency events","B: Maintaining safe conditions at the site","C: Naming the designated representative","D: Safety of the work site/area"], ans:["D"]},
+  {s:4, q:"Who is responsible after precautions are stated on work permit? Who is responsible for safety at the job site?", opts:["A: The issuer","B: The receiver","C: Both issuer and receiver","D: A & C"], ans:["C"]},
+  {s:4, q:"If receiver cannot understand some safety precautions written on the work permit, what should he do?", opts:["A: Ask issuer to explain","B: Start Work","C: Ignore them","D: Start work and then stop"], ans:["A"]},
+  {s:4, q:"Why must the receiver understand and comply with the safety precautions?", opts:["A: Firewatch may leave job","B: Work may not be finished on time","C: Equipment may get damaged","D: Accident may happen"], ans:["D"]},
+  {s:4, q:"Where must the receiver keep the work permit after it is issued?", opts:["A: With senior crew member","B: In the control room","C: Within 75 meters of the work permit","D: Display at the job site or in his possession"], ans:["D"]},
+  {s:4, q:"Why do issuer and receiver go to site?", opts:["A: To check other activities in the area","B: To count workforce","C: To discuss safety hazards and precautions","D: To check weather condition"], ans:["C"]},
+  {s:4, q:"Which section of the work permit form can the receiver fill?", opts:["A: Section 2 – hazard identification and control","B: Section 1 – Work Description","C: Hazard analysis checklist","D: Cannot fill any section"], ans:["D"]},
+  {s:4, q:"Why does the receiver tell the issuer the scope of work and equipment to be used?", opts:["A: Issuer will count all equipment","B: It is not necessary to tell issuer","C: So that equipment can be checked","D: So they can agree on safety precautions"], ans:["D"]},
+  {s:4, q:"Should receiver sign the work permit if it does not address all his safety concerns?", opts:["A: No","B: Only when issuer requests","C: If job is urgent","D: Yes"], ans:["A"]},
+  {s:4, q:"When the receiver must stop work…", opts:["A: He cannot find the issuer","B: (When) The work site becomes unsafe","C: The designated representative must leave","D: The issuer leaves the job site"], ans:["B"]},
+  {s:4, q:"What must receiver do if he stops work?", opts:["A: Tell the designated representative","B: Tell the senior craftsman","C: Tell his immediate supervisor","D: Tell/inform the issuer"], ans:["D"]},
+  {s:4, q:"What would be a good example when a receiver must stop work?", opts:["A: Material has not yet arrived","B: When he hears an emergency alarm","C: He cannot wait for the countersign","D: The backhoe ran out of fuel"], ans:["B"]},
+  {s:4, q:"What might happen if a safety problem arises, and receiver does not stop work?", opts:["A: Countersignature becomes void","B: A Fire, Injury or Accident can occur","C: Accident can occur","D: The work permit expires"], ans:["B","C"]},
+  {s:4, q:"A work permit can be cancelled by…", opts:["A: Issuer","B: Receiver","C: Designated representative","D: Both A & B"], ans:["D"]},
+ 
+  // SECTION 6: Joint Site Inspection (Q128-160)
+  {s:5, q:"Why is a designated representative sometimes appointed?", opts:["A: The issuer may be busy and need help","B: The receiver did not come to work","C: The gas test found high level reading","D: Too many safety problems were found"], ans:["A"]},
+  {s:5, q:"What is the responsibility of the designated representative?", opts:["A: Accept the receiver's responsibilities","B: Inspect the work site","C: Sign the work permit","D: Conduct joint site inspection"], ans:["D"]},
+  {s:5, q:"Who goes on the joint site inspection?", opts:["A: The issuer and receiver","B: The designated representative and receiver","C: The issuer and designated representative","D: The issuer and gas tester"], ans:["A"]},
+  {s:5, q:"Which section of the work permit form does the designated representative fill?", opts:["A: Safety observation checklist","B: Job safety analysis","C: Risk assessment","D: Hazard Analysis Checklist"], ans:["D"]},
+  {s:5, q:"What is discussed during joint site inspection?", opts:["A: GI 2.709 requirements","B: Check the Firewatch's certificate","C: Scope of work and equipment to be used","D: Designated representative's qualification"], ans:["C"]},
+  {s:5, q:"What is the purpose of a joint site inspection?", opts:["A: To meet with the workers and observe their activities","B: To discuss the scope of work and identify hazards, risks and precautions","C: To see the work plan and its implementation","D: To check the availability of equipment and manpower"], ans:["B"]},
+  {s:5, q:"When is joint site inspection (JSI) performed?", opts:["A: When job is not urgent","B: Before issuing work permit","C: Always before confined space entry","D: When work permit is to be cancelled"], ans:["B"]},
+  {s:5, q:"Who leads the joint site inspection and ensures that gas test has been conducted?", opts:["A: Receiver","B: Firewatch","C: Issuer (or his Designated representative)","D: Firewatch and standby man"], ans:["C"]},
+  {s:5, q:"Why do receivers go on the joint site inspection with the issuer?", opts:["A: To take gas test","B: To discuss hazards and risk associated with the job","C: To start the work","D: To check the Firewatch's certificate"], ans:["B"]},
+  {s:5, q:"Why are joint site inspections (JSI) conducted?", opts:["A: To count workers","B: To know who will do the job","C: To identify hazards and determine precautions","D: To check area temperature"], ans:["C"]},
+  {s:5, q:"Why must issuer and receiver both be in a joint site inspection?", opts:["A: They can check how many workers are going to work","B: To check weather condition","C: So they can clearly understand the scope of work","D: It is not mandatory"], ans:["C"]},
+  {s:5, q:"If joint site inspection including hazard analysis checklist is not performed, what will receiver do?", opts:["A: Continue work","B: Do not sign the permit","C: Analyse by himself","D: Can do it when closing work permit"], ans:["B"]},
+  {s:5, q:"If joint site inspection is completed but hazard analysis checklist is not completed, what will receiver do?", opts:["A: Continue work","B: Sign for issuer and continue work","C: Checklist sign is not important","D: Stop work and inform issuer"], ans:["D"]},
+  {s:5, q:"When would the issuer make sure that equipment has been prepared for maintenance work?", opts:["A: During the joint site inspection","B: After issuing permit","C: When the permit is closed","D: After getting countersign"], ans:["A"]},
+  {s:5, q:"Who can tell you which permit is required for your job during joint site inspection?", opts:["A: Someone from Operations","B: Plant security","C: Certified Issuer / Designated Representative","D: Any Saudi Aramco employee"], ans:["C"]},
+  {s:5, q:"What things are discussed during joint site inspection (JSI)?", opts:["A: Number of employees","B: Scope of work and precautions to take","C: Daily news and alerts","D: Cost of work and equipment expenses"], ans:["B"]},
+  {s:5, q:"Which section of the new work permit form is considered the cornerstone?", opts:["A: Joint site inspection","B: Risk assessment","C: Hazard analysis checklist","D: Job safety analysis"], ans:["C"]},
+  {s:5, q:"What must be checked during the joint site inspection? (Select all that apply)", opts:["A: Safety devices","B: Attendance report","C: Gas test","D: Equipment condition"], ans:["A","C","D"]},
+  {s:5, q:"How many sections are in the new work permit form?", opts:["A: 4 Sections","B: 5 Sections","C: 6 Sections","D: 3 Sections"], ans:["B"]},
+  {s:5, q:"Who will sign the Hazard Analysis Checklist?", opts:["A: Receiver and issuer only","B: Permit issuer only","C: The individuals who participated in the joint site inspection","D: Issuer/designated representative and receiver"], ans:["D"]},
+  {s:5, q:"How many locations can one permit cover?", opts:["A: Not more than one","B: Any related location of the activity","C: Only two","D: As many as covered by the work/activity supervisor"], ans:["A"]},
+  {s:5, q:"How many steps are there in the work permit process?", opts:["A: 10 steps","B: 5 steps","C: 15 steps","D: 4 steps"], ans:["A"]},
+ 
+  // SECTION 7: Permit Duration & Renewal (Q161-185)
+  {s:6, q:"Work permit is issued for… / Usually work permit is issued for…", opts:["A: Two operational shifts","B: 24 consecutive hours","C: Two receiver's shift","D: One operational shift"], ans:["D"]},
+  {s:6, q:"A work permit can be issued for…", opts:["A: 12 hours","B: 8 hours","C: 24 hours","D: All of above"], ans:["D"]},
+  {s:6, q:"A work permit can be approved for… (maximum)", opts:["A: 8 hours","B: 12 hours","C: 30 hours","D: 30 Days"], ans:["B"]},
+  {s:6, q:"Normally, the period covered by one work permit shall not exceed how many consecutive hours? With extension/renewal, maximum time covered shall not exceed…", opts:["A: 16 hours","B: 8 hours","C: 24 hours","D: 30 hours"], ans:["C"]},
+  {s:6, q:"For how long can an issuer issue a permit?", opts:["A: For one week only","B: For as long as he will stay on duty, but not more than 24 hours","C: For 10 hours","D: Only for 8 hours"], ans:["B"]},
+  {s:6, q:"Extended Work Permit is issued for… / Applicable period for Extended Work Permit:", opts:["A: 16 hours","B: More than 2 operational shifts, but not more than 30 days","C: 08 hours","D: All above"], ans:["B"]},
+  {s:6, q:"Maximum time covered by an Extended Work Permit is… / Extended Work Permit is approved for…", opts:["A: Not more than 30 days","B: 30 days","C: Not more than one operational shift","D: 10 days"], ans:["A"]},
+  {s:6, q:"Work permit can be issued up to 30 days if…", opts:["A: Only the cold work will be done","B: It is highly unlikely that conditions will change","C: The work site is far away","D: The receiver cannot close the permit"], ans:["B"]},
+  {s:6, q:"What happens if work must continue past the time of the original work permit?", opts:["A: Work can continue until the job is complete","B: Renew the permit","C: Extend the permit or issue/take new permit","D: Stop work and come back next day"], ans:["C"]},
+  {s:6, q:"Duration for renewal of work permit is… / Work permit is renewed for…", opts:["A: One consecutive shift","B: 26 consecutive hours","C: Two receivers shift","D: Until next morning"], ans:["A"]},
+  {s:6, q:"Who must sign a work permit to renew/extend?", opts:["A: The new area Foreman and receiver","B: The new issuer and receiver","C: Superintendent countersign is required","D: Designated representative and receiver"], ans:["B"]},
+  {s:6, q:"Who is responsible for safety at the work site after permit has been renewed/extended?", opts:["A: The issuer and the receiver who sign the renewal/extension","B: The old issuer because he did the joint site inspection","C: The original issuer and receiver","D: No one after permit has been extended"], ans:["A"]},
+  {s:6, q:"Can a receiver leave the job site? How can a receiver leave the job site?", opts:["A: No, he cannot leave job site","B: He may close or transfer permits to new/another receiver","C: When gas test reading is 0.0% LEL","D: Yes, when issuer gives permission"], ans:["B"]},
+  {s:6, q:"To whom can the receiver transfer the permit when leaving the job site?", opts:["A: Certified issuer","B: Senior craftsman","C: Supervisor or foreman","D: To a certified receiver"], ans:["D"]},
+  {s:6, q:"How can the receiver transfer the permit to a new receiver when leaving the job site?", opts:["A: By following same requirements of a permit renewal/extension","B: Just inform the issuer","C: Issuer and new receiver will inspect the site and sign in renewal section","D: Take new receiver to issuer and tell him"], ans:["A","C"]},
+  {s:6, q:"Can a renewed permit be transferred?", opts:["A: If there is no new permit form available","B: Yes, but only for one shift","C: No, (already) renewed permit cannot be transferred","D: After taking sign from unit Foreman"], ans:["C"]},
+  {s:6, q:"A transferred permit can be renewed?", opts:["A: Yes, but only for one shift","B: No, a transferred permit cannot be renewed","C: If issuer wants to extend","D: After taking sign from unit Foreman"], ans:["B"]},
+  {s:6, q:"Can a permit be renewed without conducting joint site inspection by new issuer and receiver?", opts:["A: Yes, if they know that everything is good","B: When issuer does not have time","C: If issuer wants to sign without conducting site inspection","D: No, it can be renewed only after conducting joint site inspection"], ans:["D"]},
+ 
+  // SECTION 8: Gas Testing & Atmosphere (Q186-225)
+  {s:7, q:"Does every work permit require a gas test?", opts:["A: No","B: Yes, all types of work permit require gas test","C: Only confined space entry permit","D: Only in the area where hydrocarbon is present"], ans:["B"]},
+  {s:7, q:"Who will take gas test in Saudi Aramco?", opts:["A: Anyone who knows how to use a gas monitor","B: Saudi Aramco certified gas tester","C: Work permit receiver","D: Third party certified gas tester"], ans:["B"]},
+  {s:7, q:"What information must the gas tester write on the work permit?", opts:["A: Time, date and certificate number","B: Organization code, badge number and gas test result","C: Gas test result, his badge number and sign","D: Gas test, badge number, Name and certificate number"], ans:["C"]},
+  {s:7, q:"What is checked in a gas test? What gases are checked in a gas test?", opts:["A: Oxygen level","B: Flammable gas, inert gas and heavy gas","C: Oxygen, flammable and toxic gases","D: O2, LEL, H2S, CO"], ans:["C","D"]},
+  {s:7, q:"What is a common hazard found in confined spaces?", opts:["A: Hazardous atmosphere","B: Cave-in","C: Electrocution","D: Slip Trip & Fall"], ans:["A"]},
+  {s:7, q:"A hazardous atmosphere is one which contains… (Select all applicable)", opts:["A: Oxygen deficiency or enrichment","B: CO at or above 35 ppm","C: H2S at or above 10 ppm","D: All of Above"], ans:["D"]},
+  {s:7, q:"Which Breathing Apparatus (BA) is authorized to be used in Saudi Aramco in a hazardous atmosphere?", opts:["A: STBA/SABA","B: SCBA/SABA","C: STBA/SCBA","D: SABA/SCBC"], ans:["C"]},
+  {s:7, q:"What is oxygen deficiency?", opts:["A: Lower than 20% oxygen","B: Oxygen that is not pure","C: Too much oxygen","D: A lower-than acceptable amount/level of oxygen"], ans:["D"]},
+  {s:7, q:"What is oxygen enrichment?", opts:["A: More than 23.5% oxygen","B: Oxygen that is not pure","C: Too less oxygen","D: A higher-than acceptable amount/level of oxygen"], ans:["A","D"]},
+  {s:7, q:"At which level of oxygen is breathing apparatus required?", opts:["A: At 25%","B: Less than 10%","C: Less than 20%","D: Greater than 15%"], ans:["C"]},
+  {s:7, q:"What should be done if O2 level is less than 20%?", opts:["A: Breathing apparatus must be used","B: Work can be continued without BA","C: Division head must sign the permit","D: Breathing apparatus must be used and division-head/superintendent must sign the permit"], ans:["D"]},
+  {s:7, q:"On what level of oxygen (O2) is no work allowed?", opts:["A: 16.5%","B: Any reading above 23.5%","C: 22.8%","D: Allowed at any reading"], ans:["A"]},
+  {s:7, q:"Hot work is not allowed when LEL reading is…", opts:["A: 10%","B: 0.05","C: Below 0.5%","D: Above 0% (0.0)"], ans:["D"]},
+  {s:7, q:"What is the acceptable level of LEL to allow Hot Work?", opts:["A: 10%","B: 0.0 (0%)","C: Below 0.5%","D: Above 0%"], ans:["B"]},
+  {s:7, q:"On which reading of LEL is entry not permitted into confined space?", opts:["A: 10% LEL (0.1 LEL) and above","B: 0.5 LEL","C: 0.05 LEL","D: 50% LEL"], ans:["A"]},
+  {s:7, q:"On which level of LEL is breathing apparatus required?", opts:["A: 0.5% and above","B: At 0.0 LEL","C: 0.05 LEL (5%) and above","D: 5% to 10% (0.05 to 0.1 LEL)"], ans:["C"]},
+  {s:7, q:"Which one is applicable for H2S readings? (Select all that apply)", opts:["A: 10 ppm or above – breathing apparatus must be used","B: Above 100 ppm – no work (or confined space entry) allowed","C: 10 ppm to 100 ppm – division head must sign the permit","D: All above"], ans:["D"]},
+  {s:7, q:"If H2S is present, at what level is breathing apparatus required?", opts:["A: At 5 ppm","B: 10 ppm and above","C: 1 ppm","D: Above 50 ppm"], ans:["B"]},
+  {s:7, q:"Confined space entry is not allowed if…", opts:["A: CO is 1000 ppm or above","B: H2S is above 100 ppm","C: LEL 10%","D: All above"], ans:["D"]},
+  {s:7, q:"On which reading of gas test must breathing apparatus be used?", opts:["A: CO is 500 ppm","B: LEL 8%","C: O2 18.5%","D: All the above"], ans:["D"]},
+  {s:7, q:"When the receiver smells gas, what should he do?", opts:["A: Inform safety department","B: Stop work and inform issuer to conduct gas test","C: Report to the loss prevention","D: Continue work and conduct gas test by himself"], ans:["B"]},
+  {s:7, q:"When is Firewatch required?", opts:["A: When a gas test is over 0% LEL","B: For high-risk job","C: Whenever an ignition source is used","D: Whenever a fire could occur"], ans:["C","D"]},
+  {s:7, q:"What must the Firewatch be?", opts:["A: An issuer","B: Certified","C: Trained","D: A receiver"], ans:["C"]},
+  {s:7, q:"Firewatch must know how to… / What training must Firewatch have?", opts:["A: Operate fire equipment given to him","B: To drive Fire Truck","C: Take gas test","D: Operate process equipment"], ans:["A"]},
+  {s:7, q:"What is the main responsibility of Firewatch?", opts:["A: To monitor ignition source","B: Help welder in welding work","C: Check electrical generators","D: Use proper PPEs"], ans:["A"]},
+  {s:7, q:"If Firewatch tells receiver he does not know how to operate fire extinguishing equipment, what shall receiver do?", opts:["A: Ask issuer to provide trained Firewatch","B: Continue work","C: Tell Firewatch to not tell anyone","D: Send him to get training"], ans:["A"]},
+  {s:7, q:"What are two important things a Firewatch must know?", opts:["A: Do not disturb anyone and stay near to work area","B: How to use given fire equipment and monitor ignition source","C: How to check wind speed","D: How fire blanket and rubber boots are made"], ans:["B"]},
+ 
+  // SECTION 9: Hot Work & Fire Safety (Q226-255)
+  {s:8, q:"During hot work if fire extinguisher is found depressurised, you must/have to…", opts:["A: Stop work and wait/arrange for new Fire Extinguisher","B: Continue work and send Firewatch to find another","C: Do not do anything and continue work","D: Stop all work and take Cold Work Permit"], ans:["A"]},
+  {s:8, q:"Who will stay on hot work location for 30 minutes after work is finished?", opts:["A: Pipefitter","B: Standby man","C: Any person can stay for 30 minutes","D: Firewatch"], ans:["D"]},
+  {s:8, q:"Who should be assigned when performing hot work near combustible material?", opts:["A: Fire department","B: Firewatch","C: Fire blanket","D: Standby man"], ans:["B"]},
+  {s:8, q:"Burning of material or open fire inside SA Facilities requires permission from…", opts:["A: SA Fire Protection Department","B: SAIPS Department","C: SAEPS Department","D: CSM Department"], ans:["A"]},
+  {s:8, q:"For welding activity, portable fire extinguisher shall be available within…", opts:["A: 23 m (75 ft)","B: Not required for welding job","C: 3 m (10 ft)","D: 7.5 m (25 ft)"], ans:["D"]},
+  {s:8, q:"During welding operation, where will the fire extinguisher be located?", opts:["A: With welder","B: On welding machine","C: Upwind position/direction","D: Downwind position"], ans:["C"]},
+  {s:8, q:"What is a major hazard in hot-work activities?", opts:["A: Vapour pressure","B: Ignition source","C: Ignition point","D: Flash point"], ans:["B"]},
+  {s:8, q:"Which work permit requires sewers and/or drains to be covered up to 75 ft?", opts:["A: Hot work permit","B: Cold work permit","C: No work permit has such requirement","D: Confined space entry permit"], ans:["A"]},
+  {s:8, q:"Why are sewers covered in a hot work permit?", opts:["A: To avoid ignition source","B: Flammable gases/liquid may be present inside","C: Workers working inside sewers","D: To clean sewer"], ans:["B"]},
+  {s:8, q:"Sewers must be covered within how many feet of hot work activity?", opts:["A: 75 ft (23 meters)","B: 100 meters","C: 75 meters","D: 23.5 ft"], ans:["A"]},
+  {s:8, q:"Why is it necessary to know the direction of wind when a permit is issued?", opts:["A: To prevent garbage and dirt from entering work area","B: To ensure wind (containing flammable vapours or gas) will not blow into ignition source","C: Flammable gases may blow towards an ignition source","D: None of above"], ans:["B","C"]},
+  {s:8, q:"Which non-flammable material is commonly used to purge process equipment?", opts:["A: Hydrogen Sulfide","B: Nitrogen","C: Nitrate Oxide","D: Nitrite"], ans:["B"]},
+  {s:8, q:"Commonly used inert gases are…", opts:["A: Nitrate and Ozone","B: Nitrate & Oxygen","C: Nitrogen & Argon","D: Nitrogen & Hydrogen"], ans:["C"]},
+  {s:8, q:"When is LOTO implemented?", opts:["A: Before work is finished","B: Before work permit is issued","C: When supervisor wants to","D: During JSI/work permit issuance process"], ans:["D"]},
+  {s:8, q:"What is the difference between Hot-Work and Cold-Work?", opts:["A: Cold work uses ignition source","B: Both use an ignition source","C: Hot work involves ignition source, while cold work does not involve ignition source","D: Neither uses an ignition source"], ans:["C"]},
+  {s:8, q:"Cold work includes… / Which of the following is cold work?", opts:["A: Sand removal and scaffold erection","B: Scaffold erection and using backhoe","C: Abrasive blasting and painting","D: Carpentry work and brush painting"], ans:["D"]},
+  {s:8, q:"What should be checked before allowing entry into confined space?", opts:["A: Gas test, Firewatch and barricade","B: Lighting, standby man and air mover (ventilation)","C: Firewatch, standby man and gas test","D: Air mover, respirator, and countersignature"], ans:["B"]},
+  {s:8, q:"What should be checked before issuing an equipment opening/line break permit? Three minimum things to check before opening a pipe flange joint:", opts:["A: Safety harness, belt, and safety glass","B: Sewer, man way and air mover","C: Ignition source, gloves, and safety glass","D: Wind direction, draining and ignition source"], ans:["D"]},
+  {s:8, q:"When a welder has to vent a Nitrogen purged pipe to perform welding, from which point should it be vented?", opts:["A: Far-away downwind","B: From the point where he has to weld","C: Upwind vent point","D: From any vent point"], ans:["C"]},
+  {s:8, q:"What are the two major hazards of EOLB Permit? What is the major hazard in EOLB work?", opts:["A: Release of hazardous material & flammable liquid/gas","B: Flammable oil","C: Fall of flange","D: Failure of isolation"], ans:["A"]},
+  {s:8, q:"What activity requires EOLB permit?", opts:["A: Opening of pipeline associated with close system and may contain H2S","B: Cleaning of an equipment","C: Depressurising drainage of firewater pipeline with sprinkles","D: Remove sludge from an equipment"], ans:["A"]},
+  {s:8, q:"In which order should hydrocarbon process equipment be prepared for isolated welding or confined space entry?", opts:["A: Gas test, draining, isolation, purging, cleaning","B: Drainage, isolation, purge, clean, gas test","C: Isolation, draining, purging, gas testing","D: Blind, gas test, drain"], ans:["B"]},
+  {s:8, q:"Does the EOLB permit authorize intentional release of a substance?", opts:["A: Yes, it authorizes release of a substance","B: (No), it is issued to ensure appropriate precautions are in place to prevent accidental release","C: It is required for isolation purpose only","D: It authorizes flange installation"], ans:["B"]},
+  {s:8, q:"What is the gas test requirement when performing work inside hydrocarbon areas with spark producing tools or open flame within 23-m?", opts:["A: Continuous atmospheric gas test shall be performed","B: Issuer must stay on work location","C: No specific requirement","D: Gas test shall be conducted every 2nd hour"], ans:["A"]},
+  {s:8, q:"Lines with suspected pressure should be opened at the position…", opts:["A: 15 O'clock position","B: Always from top","C: 5 O'clock position","D: From any direction"], ans:["C"]},
+  {s:8, q:"Opening a line that contains H2S requires workers to wear which monitor?", opts:["A: No gas monitor is required","B: Multi gas detector","C: O2 detector","D: Rattler T40 / H2S Monitor"], ans:["D"]},
+  {s:8, q:"Why are warning signs used? What is the purpose of warning signs?", opts:["A: To identify Restricted Area","B: To identify Hazards","C: A & B","D: To show importance of area"], ans:["C"]},
+  {s:8, q:"H2S may strongly react and explode when it comes in contact with…", opts:["A: Nitric Acid","B: Nitrogen","C: Sodium Carbonate","D: Any Acid"], ans:["D"]},
+  {s:8, q:"What is required when oxygen level is less than 20%?", opts:["A: Breathing apparatus must be used","B: Work can be continued without BA","C: Division head must sign the permit","D: Breathing apparatus must be used and division-head must sign the permit"], ans:["D"]},
+ 
+  // SECTION 10: LOTO & Isolation (Q256-290)
+  {s:9, q:"Where must LOTO be applied?", opts:["A: All electrical works in restricted area","B: Where a person has to work on a live equipment","C: Where there is work on an instrument panel","D: Where the energy in/associated-with system can cause injury"], ans:["D"]},
+  {s:9, q:"When will the issuer install LOTO and check that equipment is de-energized?", opts:["A: Before issuing all hot work permits","B: When energy in system can cause injury","C: Before receiver starts work on live electrical equipment","D: All above"], ans:["D"]},
+  {s:9, q:"When is issuer required to make sure that equipment is de-energized and LOTO is implemented?", opts:["A: When working on energized batteries","B: When power/energy may injure the people","C: When receiver works on live electrical equipment","D: When working on instrument labeling"], ans:["B","C"]},
+  {s:9, q:"Receiver will make sure that LOTO is implemented and equipment is de-energized because…", opts:["A: Energy can injure workers","B: People/workers can get injured","C: It does not make any difference","D: Locks and Tags will destroy"], ans:["A","B"]},
+  {s:9, q:"Before starting work on equipment, it must be made sure that equipment is…", opts:["A: Isolated, repaired and certified","B: Electrified, isolated and shutdown","C: De-energized with power turned on","D: Shutdown, isolated and de-energized"], ans:["D"]},
+  {s:9, q:"Removing a fuse from an electric circuit or disconnecting electrical wiring is an example of…", opts:["A: Isolating electrical equipment","B: Cleaning electrical equipment","C: Purging","D: Electrical Isolation"], ans:["D"]},
+  {s:9, q:"What is the 4-step process to ensure that electrical equipment is properly isolated?", opts:["A: LOCK, TAG, TRY & CLEAR","B: Clear area, lock equipment, test switch and tag the lock","C: LOCK, TRY, CLEAR & TAG","D: LOCK, TAG, CLEAR & TRY"], ans:["A"]},
+  {s:9, q:"Two common methods of cleaning process equipment are…", opts:["A: By water wash and/or steaming","B: By treating and clarifying","C: Water wash and steaming","D: Purging and gas testing"], ans:["A","C"]},
+  {s:9, q:"Equipment is isolated to make sure that it cannot… / We isolate equipment to prevent it from…", opts:["A: Start-up, leak or cause electric shock","B: Slip, trip or fall","C: Shutdown by accident","D: Taken to shop for repair"], ans:["A"]},
+  {s:9, q:"What are the methods of process piping and equipment isolation?", opts:["A: Single Block Valve","B: Double Block and Bleed","C: Disconnection and Blinding","D: All Above"], ans:["D"]},
+  {s:9, q:"What is positive isolation?", opts:["A: Install tag and purge","B: Removing piping and/or installing blind","C: Disconnection and Blinding","D: Install lockout and take gas test"], ans:["B","C"]},
+  {s:9, q:"Which isolation method is required for confined space entry? The only acceptable method of isolation for confined space entry is…", opts:["A: Single Block Valve","B: Double Block and Bleed","C: Any method which can be adopted","D: Positive Isolation (Disconnection or Blinding)"], ans:["D"]},
+  {s:9, q:"Double block and bleed isolation method is not approved for…", opts:["A: Confined space entry","B: Hot work on process piping or equipment","C: Work on system containing flammable or toxic material","D: All Above"], ans:["D"]},
+  {s:9, q:"Installing locks and tags on electrical breakers prevents accidental…", opts:["A: Blind installation","B: Start-up of equipment","C: Purging equipment","D: Nitrogen release"], ans:["B"]},
+  {s:9, q:"Why do we install a tag with a lock?", opts:["A: To list safety precautions required for safe execution of job","B: To explain why the lock is installed","C: To record a gas test","D: To communicate the reason and authorization of isolation"], ans:["D"]},
+  {s:9, q:"When do we install only a tag (Hold-Tags)? When is a lock device not applicable?", opts:["A: Always have to put lock first","B: When isolation device is not a lockable device","C: It is not allowed to use lock only","D: When lock cannot be placed on energy isolation device"], ans:["B","D"]},
+  {s:9, q:"Who from the work crew will install a lock?", opts:["A: One member from each work crew","B: The Foreman and the receiver","C: Every member of the crew","D: The receiver"], ans:["D"]},
+  {s:9, q:"When group lockout is required, who will place a lock on the lockout box?", opts:["A: One member from each work crew","B: The Foreman and the receiver","C: Each member of the crew","D: The receiver"], ans:["A"]},
+  {s:9, q:"After installing lock and tag on isolation device, what should be done next?", opts:["A: Check the locks again","B: Tell workers and start work","C: Verification (verify that correct system is isolated)","D: Do not make any delay and start job quickly"], ans:["C"]},
+  {s:9, q:"After installing lock and tag on switchgear, what must the issuer do?", opts:["A: Work safely","B: Ensure that the unit is isolated","C: Check the switch again to make sure that correct unit is isolated","D: None of above"], ans:["C"]},
+  {s:9, q:"After issuer installs lock, who will install lock next?", opts:["A: Do the job quickly","B: Get tools and start work","C: Receiver will install his lock","D: They can start the job with instructions of foreman"], ans:["C"]},
+  {s:9, q:"When operators change shift with LOTO still installed, what will happen?", opts:["A: The lock must be changed","B: The tag must be changed","C: The lock and tag must be changed","D: The keys are usually transferred to new shift/issuer"], ans:["D"]},
+  {s:9, q:"When maintenance team is going to work on equipment, who will make sure proper isolation and LOTO implementation?", opts:["A: Maintenance only","B: Each member of crew","C: Operations Only","D: Operations & Maintenance"], ans:["D"]},
+  {s:9, q:"Equipment must be de-energized and de-pressurized before starting work because…", opts:["A: Electricity can be wasted","B: Accidental start-up could happen","C: People can be injured by stored energy","D: Purged gas can be lost"], ans:["C"]},
+  {s:9, q:"Who should be the first organization to install lock and tag? Who installs LOTO first?", opts:["A: SCECO","B: Maintenance","C: Operations","D: Power distribution"], ans:["C"]},
+  {s:9, q:"What must Operations do before they remove their locks and tags?", opts:["A: Make sure the equipment can be safely started","B: Take gas test and restart equipment","C: Clean and purge the breaker","D: Make sure the equipment is gas free"], ans:["A"]},
+  {s:9, q:"For isolation lock, how many keys for one lock? Locks used in LOTO have ___ key(s).", opts:["A: One only","B: 3 for each lock","C: As many crew members","D: One for issuer and one for receiver"], ans:["A"]},
+  {s:9, q:"How many padlocks are required when 4 different contractors are working on one equipment?", opts:["A: 4","B: 5","C: Only one","D: 6"], ans:["B"]},
+  {s:9, q:"If only issuer and receiver (one group) are involved, what is the minimum number of locks required on an isolation point?", opts:["A: No lock is required","B: 3","C: 1","D: 2"], ans:["D"]},
+  {s:9, q:"Who can remove a lock once installed?", opts:["A: Anyone who wants to start the equipment","B: Foreman of the working crew","C: No one can remove it once locked","D: The one who installed lock / lock owner"], ans:["D"]},
+  {s:9, q:"When can a lock be forcefully removed?", opts:["A: It cannot be removed forcefully","B: When the person who installed the lock, his supervisor or superintendent cannot be contacted","C: When work permit is finished","D: When anyone needs to start or energize that equipment"], ans:["B"]},
+  {s:9, q:"Who can forcefully remove an isolation lock when the owner cannot be contacted?", opts:["A: No one can remove a lock once installed","B: Supervisor of working crew","C: Operation's shift superintendent or foreman","D: Person who installs lock can remove it only"], ans:["C"]},
+  {s:9, q:"Before removing a lock forcefully, what must be made sure?", opts:["A: Personnel and facilities are safe from injury or damage","B: Work permit is expired","C: Lock can be removed without any checks","D: All workers are in rest shelter"], ans:["A"]},
+  {s:9, q:"Hold tags and locks are installed to protect individuals performing work from…", opts:["A: Being injured in case of accidental start up","B: No one will go before finishing work","C: To protect Locks & Tags","D: Losing Energy"], ans:["A"]},
+  {s:9, q:"Which form of energy is more dangerous?", opts:["A: Drained energy","B: Potential (Stored) Energy","C: Disconnected energy","D: Connected energy"], ans:["B"]},
+  {s:9, q:"After isolation and implementation of LOTO, which step is mandatory before commencing work?", opts:["A: Do not require any other step","B: Discussion for LOTO removal","C: 'Try' Step (i.e., Verification Test)","D: Make sure Tags are written properly"], ans:["C"]},
+  {s:9, q:"What is the purpose of purging equipment? Equipment and pipelines are purged to…", opts:["A: Remove contents of an equipment by replacing it with another gas","B: To prevent fire and explosion","C: Making inside space, Inert","D: All above"], ans:["D"]},
+  {s:9, q:"When a craft shift is changed, what can be done for installed locks and tags?", opts:["A: For next shift, LOTO is not mandatory","B: Keeps the previous locks and install new on the same isolation device","C: Replace the previous shift locks and tags, or transfer the key and sign the tags","D: Key must remain with original installer"], ans:["C"]},
+  {s:9, q:"How can machine movement be restrained?", opts:["A: Use of Gear Lock","B: Use of Wedge, Pin, Bar, Chain, Sleeve","C: Disengaging translation medium (belts, couplers, shaft)","D: All the above"], ans:["D"]},
+ 
+  // SECTION 11: Confined Space Entry (Q291-315)
+  {s:10, q:"In a confined space entry, what is the most important thing to do?", opts:["A: Get a hot permit","B: Non-sparking tools will be used","C: Ensure that space is isolated","D: Gas release can be made safely"], ans:["C"]},
+  {s:10, q:"If standby man is not available and the issuer tells you to sign a confined space entry permit, what will you do as receiver?", opts:["A: Sign permit and call standby man","B: Sign permit, but wait for standby man to come","C: Start work and bring a Firewatch","D: Will not sign the permit until standby man arrives at site"], ans:["D"]},
+  {s:10, q:"When installing a blind on a previously H2S containing line, what respiratory protection will be taken?", opts:["A: Use of cartridge respirator","B: Use of any respirator","C: Use of SCBA","D: No need to use respirator"], ans:["C"]},
+  {s:10, q:"At 15-ppm H2S concentration, which respiratory protection will be used?", opts:["A: SCBA","B: Cartridge respirator","C: N-95 Dust mask","D: No respirator is required"], ans:["A"]},
+  {s:10, q:"If SCBA is required and not everyone has it, what will receiver do?", opts:["A: Will continue work and inform issuer","B: Will continue work and inform worker to take care","C: Will stop the work and inform issuer about situation","D: Will stop work and stay on site until permit time is over"], ans:["C"]},
+  {s:10, q:"Chemical Hazard Bulletin (CHB) indicates…", opts:["A: How to use chemical","B: Only physical properties of chemical","C: Expiry date of the chemical","D: Hazards involved and precautions for handling the chemical"], ans:["D"]},
+  {s:10, q:"When issuing EOLB permit, what are the two major points to check?", opts:["A: Wind direction only","B: Position of fire alarm","C: Line direction","D: Wind direction and drainage"], ans:["D"]},
+  {s:10, q:"Which space will be considered as a confined space?", opts:["A: Structure/Space not designed for human occupancy","B: Small rooms and CCRs","C: Storerooms","D: Buildings to store computers & equipment"], ans:["A"]},
+  {s:10, q:"What activity requires a confined space entry permit?", opts:["A: Working near storage tank","B: Working in oil processing area","C: Working in restricted area","D: Entry/Working in excavation 4-ft or deeper"], ans:["D"]},
+  {s:10, q:"When ___ part of body will enter in confined space, it will be considered as Entry.", opts:["A: Any","B: 2 parts","C: Legs","D: Head and neck"], ans:["A"]},
+  {s:10, q:"Why is spray painting more hazardous in a confined space than in an open area?", opts:["A: It can make atmosphere flammable/explosive","B: Paints are irritant to eyes","C: Causes sufficient oxygen decrease","D: Dangerous to skin"], ans:["A","C"]},
+  {s:10, q:"When entrant enters into confined space, the standby man records their name how many times?", opts:["A: Only when they go inside","B: Two times (on entry and exit)","C: Entering or Exiting","D: When coming out from space"], ans:["C"]},
+  {s:10, q:"What are the hazards associated with confined space that relate to atmosphere?", opts:["A: Sharp objects","B: Lack of nitrogen","C: Oxygen deficiency or enrichment","D: All above"], ans:["C"]},
+  {s:10, q:"What do we call the person required to be at a job site because of a special skill he has?", opts:["A: Competent person","B: Standby man","C: Designated representative","D: Certified person"], ans:["B"]},
+  {s:10, q:"What is the responsibility of the standby man?", opts:["A: Stay within 75-ft of work area","B: During emergency stay in control room","C: Monitor work activity","D: Monitor ignition source"], ans:["C"]},
+  {s:10, q:"What is the main responsibility of the confined space entry standby man/attendant?", opts:["A: To monitor confined space entry when crew is inside space","B: Only to be present in area","C: To record progress of work","D: Inform rescue in case of emergency"], ans:["A"]},
+  {s:10, q:"What must the confined space entry plan include?", opts:["A: Name of all Entrants","B: All JSAs of the site","C: Standby man name and contact number","D: Confined Space Entry Rescue Plan"], ans:["D"]},
+  {s:10, q:"Confined space entry rescue operations can be classified into how many types?", opts:["A: Four","B: One","C: Three","D: Too many"], ans:["C"]},
+  {s:10, q:"What are the types of CSE Rescue?", opts:["A: Self-rescue","B: Non-entry rescue","C: Entry rescue / Internal rescue","D: All mentioned"], ans:["D"]},
+  {s:10, q:"When is natural ventilation acceptable in confined space?", opts:["A: During emergency work","B: When doing cold work","C: In open top spaces, like excavations","D: Never"], ans:["C"]},
+  {s:10, q:"When a hazardous atmosphere exists in confined space, what must mechanical ventilation achieve?", opts:["A: Ensure removal of hazardous airborne contamination","B: Ensure the air remains in motion and new air comes to space","C: Maintain internal temperature","D: Maintain positive pressure inside the space"], ans:["A"]},
+  {s:10, q:"For any enclosed confined space where NORM contamination is known or suspected, for how long must mechanical ventilation be carried out prior to entry?", opts:["A: Minimum for four hours","B: Minimum for half hour","C: For 15 minutes","D: For as long as possible, but not less than one hour"], ans:["D"]},
+  {s:10, q:"Many hazards associated with confined spaces are attributed to by-products such as slug, scales, fluids, gases, and other residues. (True/False)", opts:["A: True","B: False"], ans:["A"]},
+  {s:10, q:"What are the preferred locations in confined space for ventilation arrangement?", opts:["A: Exhaust from bottom and blow at bottom","B: Blow-in air at bottom and exhaust from top","C: Always introduce air at top","D: At any point"], ans:["B"]},
+  {s:10, q:"What should be the position of ventilation equipment/fan/blower when providing air to a confined space?", opts:["A: Near to the entry point of the space","B: Upwind to any source of contamination or release, including any engine exhaust","C: Downwind to any internal combustion engine","D: It does not make any difference"], ans:["B"]},
+  {s:10, q:"Internal combustion engines shall not be positioned inside a confined space or at a location that could allow exhaust to enter the space. (True/False)", opts:["A: False","B: True"], ans:["B"]},
+  {s:10, q:"Where shall mechanical cooling be directed inside confined space?", opts:["A: Where welding is being performed","B: At the middle area of confined space","C: Where persons are working within confined space","D: Away from workers"], ans:["C"]},
+  {s:10, q:"What shall be the position of generators relative to confined space access/air movers?", opts:["A: Cannot keep them within 100 feet of the space","B: Upwind from the entry/exit points and air movers","C: Downwind from the entry/exit points and air movers","D: Near to the entry point of the space"], ans:["C"]},
+  {s:10, q:"What is required for High-Risk Activities in normal working hours?", opts:["A: No approval required during normal hours","B: (Approval of) Unit foreman or higher","C: Shift superintendent only","D: Issuer's approval only"], ans:["B"]},
+  {s:10, q:"What is required for High-Risk Activities to be performed after normal working hours?", opts:["A: No specific requirement","B: Authorization form only","C: Department head approval only","D: Authorization form and department head approval"], ans:["D"]},
+  {s:10, q:"What is required to be placed on confined space openings that can be entered without tools or a specific key?", opts:["A: A safety warning sign shall be placed","B: A notice to not enter if you are not on duty","C: A warning sign identifying them as 'Permit Required Confined Space'","D: No specific requirement"], ans:["C"]},
+  {s:10, q:"According to new GI of October 2025, how is the gas test required to be conducted and recorded in confined space?", opts:["A: Continuously performed, and recorded before entry, after break and interruption in work and when change in conditions occur","B: Not required when every person has H2S monitor","C: To be conducted and recorded before entry, after break and interruption in work and when change in conditions occur","D: Continuous but recording is not required"], ans:["C"]},
+  {s:10, q:"If there is an emergency in confined space and you are not trained in rescue, what will you do?", opts:["A: Enter in confined space/area and do rescue","B: Stay out of trouble and do your own work","C: Inform the rescue team","D: Perform rescue in any case"], ans:["C"]},
+ 
+  // SECTION 12: Excavations, Heavy Equipment & General Safety (Q316-330)
+  {s:11, q:"At what depth of an excavation does confined space entry permit requirement start?", opts:["A: 4 m","B: 4 ft (1.2 m)","C: 2.2 m","D: 1.2 ft"], ans:["B"]},
+  {s:11, q:"What is the required minimum distance for a scaffold base from the edge of an excavation?", opts:["A: Height of scaffold × depth of excavation","B: 2.6 m","C: 1.5 × depth of excavation","D: 1 m"], ans:["C"]},
+  {s:11, q:"What is the minimum clearance required for heavy equipment and vehicles from the edge of an excavation?", opts:["A: 1.5 × depth of excavation","B: 2 m (6.5 ft) or the depth of excavation","C: 1.8 m (6 ft)","D: 3 m (10 ft)"], ans:["B"]},
+  {s:11, q:"Which equipment are allowed to operate within 2-m from the edge of an excavation?", opts:["A: Crane","B: Welding truck","C: Excavation and backfilling equipment","D: None of above"], ans:["C"]},
+  {s:11, q:"What is the requirement of distance for a crane from the edge of excavation?", opts:["A: Depth of excavation for type A soil","B: Two times the depth of excavation for type B and C soils","C: Two-meter distance is enough","D: None of above"], ans:["B"]},
+  {s:11, q:"What is the minimum distance from any pipeline, cable, or other obstruction where mechanical excavation cannot be performed?", opts:["A: 1 m (3 ft)","B: 2 m (6.5 ft)","C: 1.8 m (6 ft)","D: 3 m (10 ft)"], ans:["A"]},
+  {s:11, q:"What is the minimum distance required from an energized overhead power line when voltage is unknown or above 250kV?", opts:["A: 25 ft","B: 15 ft","C: Between goal posts","D: 3 ft"], ans:["A"]},
+  {s:11, q:"What minimum distance shall be maintained from an overhead 50kV powerline?", opts:["A: 25 ft","B: 10 ft","C: 20 ft","D: 3 ft"], ans:["C"]},
+  {s:11, q:"What will happen if warning signs and barricades are not placed along excavations?", opts:["A: People may fall into excavation","B: Rainwater can go inside excavation","C: Vehicle/equipment may fall in excavation","D: Both A & B"], ans:["D"]},
+  {s:11, q:"How can excavation cave-in be prevented? Excavation can be protected against sidewall cave-ins by…", opts:["A: Do not excavate","B: Use scaffolding boards to protect against cave-in","C: Benching, Sloping and Shoring","D: Use only hand tools to dig"], ans:["C"]},
+  {s:11, q:"What can be used to protect vehicles from falling into excavations?", opts:["A: Signage and standby man","B: Signage and barricade","C: Barricade and blinking lights","D: Standby man and barricade"], ans:["B"]},
+  {s:11, q:"Why should gas test be taken before entering an excavation?", opts:["A: To check the oxygen deficiency","B: To check the presence of explosive/flammable gases","C: To check the presence of toxic gases","D: All above"], ans:["D"]},
+  {s:11, q:"How far from the edge of excavation must spoil soil be kept?", opts:["A: 0.6 m (2 ft)","B: 2 m (6.6 ft)","C: 1.2 m (4 ft)","D: Any distance"], ans:["C"]},
+  {s:11, q:"What is the major concern in mechanical excavation using a backhoe?", opts:["A: More backfilling material will be required","B: It can rupture underground utility lines or pipelines","C: Waste of excavated soil","D: Accidental contact with underground utility lines"], ans:["B","D"]},
+  {s:11, q:"What must be done before a backhoe can dig an excavation in a hydrogen process area?", opts:["A: Excavate mechanically until warning tapes appear","B: Shutdown all critical process equipment","C: Locate and mark all underground equipment and cables","D: Excavate slowly in area"], ans:["C"]},
+];
+ 
+// ===== ANSWER KEY from document =====
+const DOC_ANSWERS = {
+  1:"D",2:"B",3:"B",4:"B-C",5:"B-C",6:"A",7:"A-D",8:"C",9:"B",10:"B",
+  11:"C",12:"D",13:"D",14:"C",15:"D",16:"C",17:"A-C",18:"C",19:"B-D",20:"C",
+  21:"B",22:"A",23:"C",24:"D",25:"A-B",26:"B",27:"D",28:"A",29:"D",30:"B",
+  31:"C",32:"B",33:"C",34:"B",35:"B",36:"A-B",37:"A",38:"C",39:"A",40:"C",
+  41:"A",42:"D",43:"B",44:"B-C",45:"C",46:"A",47:"A-D",48:"B",49:"A",50:"A",
+  51:"A-D",52:"C",53:"B-D",54:"B",55:"A",56:"D",57:"D",58:"C",59:"B",60:"D",
+  61:"A",62:"D",63:"A",64:"B-D",65:"A-B",66:"D",67:"C",68:"C",69:"B",70:"C",
+  71:"B",72:"C",73:"C",74:"B",75:"D",76:"A",77:"C",78:"B",79:"C",80:"A-C-D",
+  81:"A",82:"D",83:"D",84:"D",85:"C",86:"B",87:"B",88:"A-B",89:"B",90:"C-D",
+  91:"B-C",92:"A",93:"B",94:"A",95:"B",96:"D",97:"A-C",98:"C",99:"B",100:"D",
+  101:"B",102:"A",103:"C",104:"A-C",105:"B",106:"A",107:"A",108:"B",109:"D",110:"A",
+  111:"B",112:"B",113:"D",114:"C",115:"A",116:"B",117:"D",118:"B",119:"B-C",120:"D",
+  121:"C",122:"A",123:"C",124:"A-B-D-E-F",125:"D",126:"C",127:"A-D",128:"B",129:"B",130:"D",
+  131:"C",132:"A",133:"B",134:"C",135:"B",136:"A",137:"D",138:"B",139:"D",140:"A-B",
+  141:"B",142:"D",143:"B",144:"B",145:"D",146:"D",147:"B",148:"C",149:"B",150:"C",
+  151:"A-B",152:"D",153:"A",154:"B",155:"A",156:"B",157:"B",158:"C",159:"C-D",160:"A",
+  161:"D",162:"B",163:"A-D",164:"A-D",165:"C",166:"D",167:"B",168:"D",169:"B",170:"A",
+  171:"B-D",172:"D",173:"B",174:"D",175:"D",176:"B",177:"C-D",178:"C",179:"A",180:"B",
+  181:"A",182:"A",183:"C",184:"A-D",185:"C",186:"B",187:"A",188:"C",189:"C",190:"B-C",
+  191:"D",192:"D",193:"C",194:"B-C",195:"B",196:"C",197:"B-D",198:"D",199:"B",200:"B",
+  201:"A-B",202:"D",203:"A-D",204:"D",205:"A-C",206:"A",207:"D",208:"B-C",209:"D",210:"D",
+  211:"B",212:"C-D",213:"B-D",214:"A-D",215:"C",216:"B",217:"C",218:"C",219:"C",220:"D",
+  221:"D",222:"C",223:"C",224:"A",225:"A",226:"B",227:"D",228:"C",229:"B",230:"C",
+  231:"A",232:"A",233:"B",234:"B",235:"D",236:"C",237:"A",238:"C",239:"D",240:"D",
+  241:"A",242:"B",243:"A",244:"B",245:"D",246:"D",247:"C",248:"D",249:"A",250:"B-D",
+  251:"B",252:"C",253:"B-D",254:"C",255:"D",256:"A",257:"A",258:"B",259:"D",260:"A",
+  261:"C",262:"D",263:"A",264:"D",265:"A",266:"A",267:"B",268:"C",269:"B",270:"C",
+  271:"A",272:"C",273:"B",274:"C",275:"C",276:"A",277:"A-B-C-D-E",278:"A-C-D-E-F",279:"A-B",280:"B",
+  281:"B-D",282:"D",283:"D",284:"D",285:"A",286:"D",287:"D",288:"B",289:"B",290:"A",
+  291:"A",292:"A",293:"B",294:"A",295:"B",296:"A",297:"A",298:"B",299:"A",300:"B",
+  301:"A",302:"D",303:"C",304:"B-C-D",305:"A",306:"B",307:"B",308:"B",309:"C",310:"A",
+  311:"D",312:"C",313:"D",314:"B",315:"B",316:"C",317:"A",318:"B",319:"A",320:"C",
+  321:"A",322:"A",323:"A",324:"A",325:"B",326:"B",327:"D",328:"A",329:"C",330:"A"
+};
+ 
+// STATE
+let answered = 0, correct = 0, wrong = 0;
+ 
+// ===== BUILD QUIZ =====
+function buildQuiz() {
+  const body = document.getElementById('quizBody');
+  body.innerHTML = '';
+  let currentSection = -1;
+  let qGlobalNum = 0;
+ 
+  QUESTIONS.forEach((q, idx) => {
+    qGlobalNum++;
+    if (q.s !== currentSection) {
+      currentSection = q.s;
+      const sec = SECTIONS[currentSection];
+      body.innerHTML += `
+        <div class="section-header" id="${sec.id}">
+          <h2>Section ${currentSection + 1}: ${sec.title}</h2>
+          <p>${sec.desc}</p>
+        </div>`;
+    }
+ 
+    const isMulti = q.ans.length > 1;
+    const inputType = isMulti ? 'checkbox' : 'radio';
+    const tagClass = isMulti ? 'multi' : '';
+    const tagLabel = isMulti ? 'SELECT ALL THAT APPLY' : 'MCQ';
+ 
+    let optionsHTML = '<div class="options-grid">';
+    q.opts.forEach((opt, oi) => {
+      const letter = opt.charAt(0);
+      const text = opt.substring(3);
+      optionsHTML += `
+        <label class="option-label" id="opt_${idx}_${oi}">
+          <input type="${inputType}" name="q${idx}" value="${letter}" onchange="onSelect(${idx})">
+          <span class="opt-letter">${letter}</span>
+          <span class="opt-text">${text}</span>
+        </label>`;
+    });
+    optionsHTML += '</div>';
+ 
+    body.innerHTML += `
+      <div class="question-card" id="qcard_${idx}">
+        <div class="q-meta">
+          <span class="q-num">Q${qGlobalNum} / 330</span>
+          <span class="q-tag ${tagClass}">${tagLabel}</span>
+        </div>
+        <div class="question-text">${q.q}</div>
+        ${optionsHTML}
+        <div class="feedback-box" id="fb_${idx}"></div>
+        <div class="check-btn-wrap">
+          <button class="btn btn-primary" onclick="checkAnswer(${idx})" style="font-size:13px;padding:7px 18px;">Check Answer</button>
+          <span class="required-note" id="req_${idx}"></span>
+        </div>
+      </div>`;
+  });
+ 
+  buildAnswerKey();
+  updateProgress();
+}
+ 
+function onSelect(idx) {
+  // visual update only
+  const card = document.getElementById(`qcard_${idx}`);
+  const q = QUESTIONS[idx];
+  const inputs = document.querySelectorAll(`input[name="q${idx}"]`);
+  inputs.forEach((inp, oi) => {
+    const label = document.getElementById(`opt_${idx}_${oi}`);
+    if (inp.checked) label.classList.add('selected');
+    else label.classList.remove('selected');
+  });
+}
+ 
+function getSelected(idx) {
+  const inputs = document.querySelectorAll(`input[name="q${idx}"]`);
+  const sel = [];
+  inputs.forEach(inp => { if (inp.checked) sel.push(inp.value); });
+  return sel;
+}
+ 
+function checkAnswer(idx) {
+  const q = QUESTIONS[idx];
+  const selected = getSelected(idx);
+  const card = document.getElementById(`qcard_${idx}`);
+  const fb = document.getElementById(`fb_${idx}`);
+  const req = document.getElementById(`req_${idx}`);
+ 
+  if (selected.length === 0) {
+    req.textContent = '⚠ Please select an answer first.';
+    return;
+  }
+  req.textContent = '';
+ 
+  // disable inputs
+  document.querySelectorAll(`input[name="q${idx}"]`).forEach(i => i.disabled = true);
+ 
+  // Mark options
+  q.opts.forEach((opt, oi) => {
+    const letter = opt.charAt(0);
+    const label = document.getElementById(`opt_${idx}_${oi}`);
+    label.classList.remove('selected');
+    if (q.ans.includes(letter)) {
+      label.classList.add('correct-opt');
+    }
+    if (selected.includes(letter) && !q.ans.includes(letter)) {
+      label.classList.add('wrong-opt');
+    }
+  });
+ 
+  // Determine result
+  const correct_sel = q.ans.every(a => selected.includes(a)) && selected.every(s => q.ans.includes(s));
+  const partial = q.ans.some(a => selected.includes(a)) && !correct_sel;
+ 
+  // hide check button
+  card.querySelector('.check-btn-wrap').style.display = 'none';
+ 
+  fb.classList.add('show');
+  if (correct_sel) {
+    card.classList.add('correct');
+    fb.classList.add('correct');
+    fb.innerHTML = `<strong>✅ Correct!</strong>The correct answer is: ${q.ans.join(', ')}.`;
+    answered++; correct++;
+  } else if (partial && q.ans.length > 1) {
+    card.classList.add('partial');
+    fb.classList.add('partial');
+    fb.innerHTML = `<strong>⚠ Partially Correct.</strong>You selected: ${selected.join(', ')}. All correct options are: ${q.ans.join(', ')}.`;
+    answered++; wrong++;
+  } else {
+    card.classList.add('incorrect');
+    fb.classList.add('incorrect');
+    fb.innerHTML = `<strong>❌ Incorrect.</strong>You selected: ${selected.join(', ')}. Correct answer(s): ${q.ans.join(', ')}.`;
+    answered++; wrong++;
+  }
+ 
+  updateProgress();
+  updateSticky();
+}
+ 
+function showAllAnswers() {
+  QUESTIONS.forEach((q, idx) => {
+    const card = document.getElementById(`qcard_${idx}`);
+    if (card.classList.contains('correct') || card.classList.contains('incorrect') || card.classList.contains('partial')) return;
+    const fb = document.getElementById(`fb_${idx}`);
+    q.opts.forEach((opt, oi) => {
+      const letter = opt.charAt(0);
+      const label = document.getElementById(`opt_${idx}_${oi}`);
+      if (q.ans.includes(letter)) label.classList.add('correct-opt');
+    });
+    document.querySelectorAll(`input[name="q${idx}"]`).forEach(i => i.disabled = true);
+    card.querySelector('.check-btn-wrap').style.display = 'none';
+    fb.classList.add('show');
+    fb.classList.add('correct');
+    fb.innerHTML = `<strong>📋 Answer:</strong> ${q.ans.join(', ')}`;
+  });
+}
+ 
+function submitAll() {
+  let totalCorrect = 0, totalWrong = 0, total = QUESTIONS.length;
+ 
+  QUESTIONS.forEach((q, idx) => {
+    const card = document.getElementById(`qcard_${idx}`);
+    const sel = getSelected(idx);
+    if (sel.length === 0) return; // skip unanswered
+    const isCorrect = q.ans.every(a => sel.includes(a)) && sel.every(s => q.ans.includes(s));
+    if (isCorrect) totalCorrect++;
+    else totalWrong++;
+  });
+ 
+  const pct = Math.round((totalCorrect / total) * 100);
+  const panel = document.getElementById('scorePanel');
+  panel.classList.add('show');
+  document.getElementById('scorePct').textContent = pct + '%';
+  document.getElementById('scCorrect').textContent = totalCorrect;
+  document.getElementById('scWrong').textContent = total - totalCorrect;
+  document.getElementById('scTotal').textContent = total;
+ 
+  const circle = document.getElementById('scoreCircle');
+  circle.style.background = `conic-gradient(${pct >= 70 ? 'var(--green)' : pct >= 50 ? 'var(--gold)' : 'var(--red)'} ${pct}%, var(--surface2) 0%)`;
+ 
+  const verdict = document.getElementById('verdict');
+  const vsub = document.getElementById('verdictSub');
+  if (pct >= 70) {
+    verdict.textContent = '🎉 PASSED';
+    verdict.style.color = 'var(--green)';
+    vsub.textContent = 'Congratulations! You met the passing criteria of 70%.';
+  } else if (pct >= 50) {
+    verdict.textContent = '⚠️ BORDERLINE';
+    verdict.style.color = 'var(--gold)';
+    vsub.textContent = 'Close, but below the 70% passing mark. Review missed questions.';
+  } else {
+    verdict.textContent = '❌ NEEDS IMPROVEMENT';
+    verdict.style.color = 'var(--red)';
+    vsub.textContent = 'Below passing mark. Please review all sections and retake.';
+  }
+ 
+  panel.scrollIntoView({ behavior: 'smooth' });
+}
+ 
+function resetAll() {
+  if (!confirm('Reset all answers? This cannot be undone.')) return;
+  answered = 0; correct = 0; wrong = 0;
+  buildQuiz();
+  document.getElementById('scorePanel').classList.remove('show');
+  window.scrollTo(0, 0);
+}
+ 
+function updateProgress() {
+  const total = QUESTIONS.length;
+  const pct = Math.round((answered / total) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${answered} of ${total} answered`;
+  document.getElementById('progressPct').textContent = pct + '%';
+}
+ 
+function updateSticky() {
+  document.getElementById('stAns').textContent = answered;
+  document.getElementById('stCor').textContent = correct;
+  document.getElementById('stWrg').textContent = wrong;
+  const pct = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+  document.getElementById('stPct').textContent = pct + '%';
+}
+ 
+function buildAnswerKey() {
+  const grid = document.getElementById('akGrid');
+  grid.innerHTML = '';
+  for (let i = 1; i <= 330; i++) {
+    const ans = DOC_ANSWERS[i] || '?';
+    grid.innerHTML += `
+      <div class="ak-item">
+        <span class="qn">Q${i}</span>
+        <span class="ans">${ans}</span>
+      </div>`;
+  }
+}
+ 
+// INIT
+buildQuiz();
+</script>
+</body>
+</html>
